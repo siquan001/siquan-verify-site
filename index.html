@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify - 人机验证插件</title>
+  <link rel="stylesheet" href="./prism.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .js{
+      width: 100%;
+      height: 300px;
+      background-color: #effffb;
+    }
+    .js h1{
+      font-weight: 300;
+      font-size: 100px;
+      text-align: center;
+      padding: 20px 0;
+      color: transparent;
+      background-image: linear-gradient(#4af,#40f);
+      background-clip: text;
+      -webkit-background-clip: text;
+      line-height: 150px;
+    }
+    .js h2{
+      font-weight: 300;
+      font-size: 30px;
+      text-align: center;
+      line-height: 50px;
+    }
+    .list{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 150px;
+      width: 100%;
+    }
+    .list button{
+      border: 0;
+      outline: 0;
+      width: 150px;
+      height: 40px;
+      font-size: 16px;
+      margin: 5px;
+      border-radius: 40px;
+      border: #09f solid 1px;
+      background-color: #fff;
+      color: #09f;
+      cursor: pointer;
+    }
+    .list button.doc-btn{
+      background-color: #09f;
+      color: #fff;
+    }
+    .doc,.demo{
+      padding: 50px;
+      line-height: 24px;
+    }
+    .doc h1,.demo h1{
+      font-weight: 300;
+      line-height: 100px;
+    }
+    .doc h2{
+      font-weight: 300;
+      line-height: 70px;
+    }
+    .doc .dm{
+      float: left;
+      width:50%;
+    }
+    .doc .docs{
+      float: left;
+      width:50%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .doc .clear{
+      overflow: hidden;
+    }
+    .doc .docs code{
+      background-color: #f5f2f0;
+      border-radius: 3px;
+      height: 24px;
+      display: inline-block;
+      padding: 0 1em;
+    }
+    .tabs {
+      overflow: hidden;
+    }
+    .tabs .tab{
+      float: left;
+      width: 200px;
+      height: 30px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .tabs .tab.active{
+      border-bottom: #09f solid 2px;
+    }
+    .demo1{
+      width: max-content;
+      padding: 20px 0;
+    }
+    .demo1 input {
+      padding: 5px;
+      margin: 5px;
+      width: 200px;
+    }
+    .demo1 button {
+      margin: 5px auto;
+      display: block;
+      padding: 5px 15px;
+    }
+    .demo2{
+      width: max-content;
+      padding: 20px 0;
+      display: none;
+    }
+    .demo2 input {
+      padding: 5px;
+      margin: 5px;
+      width: 280px;
+    }
+    .demo2 button {
+      margin: 5px auto;
+      display: block;
+      padding: 5px 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="js">
+    <h1>Verify</h1>
+    <h2>免费、简单、快速的人机验证插件</h2>
+  </div>
+  <div class="list">
+    <button class="demo-btn" onclick="location.href='#demo'">Demo</button>
+    <button class="doc-btn" onclick="location.href='#doc'">快速开始</button>
+  </div>
+  <a name="doc"></a>
+  <div class="doc">
+    <h1>使用文档</h1>
+    <h2>基本</h2>
+    <div class="clear">
+      <div class="dm">
+        <pre>
+          <code class="language-html">
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;meta charset="UTF-8"/&gt;
+      &lt;!-- 引用verify.js --&gt;
+      &lt;script src="https://cdn.jsdelivr.net/npm/siquan-verify@latest/verify.min.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;!-- 点击式验证 --&gt;
+      &lt;div class="verify"&gt;&lt;/div&gt;
+      &lt;!-- 嵌入式验证 --&gt;
+      &lt;div class="verify-embed"&gt;&lt;/div&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+  </code>
+        </pre>
+      </div>
+      <div class="docs">
+        只用先引用<code>https://cdn.jsdelivr.net/npm/siquan-verify@latest/verify.min.js</code>，然后使用<code>&lt;div class="verify"&gt;&lt;/div&gt;</code>或<code>&lt;div class="verify-embed"&gt;&lt;/div&gt;</code>即可把人机验证加入到页面。
+      </div>
+    </div>
+    
+    <h2>API</h2>
+    <div class="clear">
+      <div class="dm">
+        <pre><code class="language-js">
+  var verify=document.getElementById('verify');
+  var login_btn=document.getElementById('login_btn')
+  
+  // 所有使用了Verify API的代码需要放在Verify.onready里执行
+  Verify.onready=function(){
+    login_btn.onclick=function(){
+      // 使用 Verify.isVerified(Element) 判断是否验证
+      var isVerified=Verify.isVerified(verify);
+      if(!isVerified){
+        alert('请先进行人机验证！');
+      }
+    }
+    //使用 Verify.onverified(Element,Function) 监听验证
+    Verify.onverified(verify,function(){
+      alert('验证成功！');
+    })
+  }
+        </code></pre>
+      </div>
+      <div class="docs">
+        所有使用了Verify API(即使用<code>Verify.xxx</code>)的代码需要放在Verify.onready里执行。<br>
+  <br>
+  <code>Verify.isVerified(Element)</code> : 判断是否验证<br>
+    <code>Verify.onverified(Element,Function)</code> : 监听验证
+      </div>
+    </div>
+    
+  </div>
+  <div class="demo">
+    <h1>使用示例</h1>
+    <div class="tabs">
+      <div class="tab active">点击式</div>
+      <div class="tab">嵌入式</div>
+    </div>
+    <div class="demo1">
+      <input type="text" placeholder="请输入用户名"/><br>
+      <input type="password" placeholder="请输入密码">
+      <div class="verify" id="verify1"></div>
+      <button id="login_btn1">登录</button>
+    </div>
+    <div class="demo2">
+      <input type="text" placeholder="请输入用户名"/><br>
+      <input type="password" placeholder="请输入密码">
+      <div class="verify-embed" id="verify2"></div>
+      <button id="login_btn2">登录</button>
+    </div>
+  </div>
+  <a name="demo"></a>
+</body>
+<script src="./prism.js"></script>
+<script src="./verify.min.js"></script>
+<script>
+  document.querySelectorAll(".tab").forEach(function(e){
+    e.onclick=function(){
+      if(this.innerHTML=="点击式"){
+        document.querySelector(".demo1").style.display="block";
+        document.querySelector(".demo2").style.display="none";
+      }else{
+        document.querySelector(".demo2").style.display="block";
+        document.querySelector(".demo1").style.display="none";
+      }
+      document.querySelectorAll(".tab").forEach(function(e2){
+        e2.classList.remove('active');
+      })
+      this.classList.add('active');
+    }
+  })
+  Verify.onready=function(){
+    document.getElementById("login_btn1").onclick=function(){
+      if(!Verify.isVerified(document.getElementById("verify1"))){
+        alert('请先验证');
+      }
+    }
+    document.getElementById("login_btn2").onclick=function(){
+      if(!Verify.isVerified(document.getElementById("verify2"))){
+        alert('请先验证');
+      }
+    }
+  }
+</script>
+</html>
